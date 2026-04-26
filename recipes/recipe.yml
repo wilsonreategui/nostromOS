@@ -6,9 +6,10 @@ image-version: 42
 
 modules:
   - type: os-release
-    name: NostromOS
-    pretty_name: NostromOS
-    logo: nostromos-logo
+    properties:
+      name: NostromOS
+      pretty_name: NostromOS
+      logo: nostromos-logo
 
   - type: files
     files:
@@ -17,27 +18,25 @@ modules:
 
   - type: rpm-ostree
     remove:
-      packages:
-        - firefox
-        - firefox-langpacks
-        - kcalc
-        - kate
-        - elisa-player
-        - gwenview
-        - okular
-        - kmines
-        - kmahjongg
-        - kpat
-        - kcharselect
-        - kcolorchooser
-        - dragon
-        - filelight
-        - konversation
-        - krdc
-        - krfb
+      - firefox
+      - firefox-langpacks
+      - kcalc
+      - kate
+      - elisa-player
+      - gwenview
+      - okular
+      - kmines
+      - kmahjongg
+      - kpat
+      - kcharselect
+      - kcolorchooser
+      - dragon
+      - filelight
+      - konversation
+      - krdc
+      - krfb
 
   - type: default-flatpaks
-    notify: true
     configurations:
       - scope: system
         repo:
