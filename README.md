@@ -1,43 +1,51 @@
-# BlueBuild Template &nbsp; [![bluebuild build badge](https://github.com/blue-build/template/actions/workflows/build.yml/badge.svg)](https://github.com/blue-build/template/actions/workflows/build.yml)
+# 🚀 nostromOS
 
-See the [BlueBuild docs](https://blue-build.org/how-to/setup/) for quick setup instructions for setting up your own repository based on this template.
+Mi propio sistema operativo inmutable basado en **Fedora Kinoite + Nvidia**, construido automáticamente usando BlueBuild.
 
-After setup, it is recommended you update this README to describe your custom image.
+## 🗺️ Arquitectura y Carpetas
 
-## Installation
+El sistema se construye en la nube de manera automática y atómica.
 
-> [!WARNING]  
-> [This is an experimental feature](https://www.fedoraproject.org/wiki/Changes/OstreeNativeContainerStable), try at your own discretion.
-
-To rebase an existing atomic Fedora installation to the latest build:
-
-- First rebase to the unsigned image, to get the proper signing keys and policies installed:
-  ```
-  rpm-ostree rebase ostree-unverified-registry:ghcr.io/blue-build/template:latest
-  ```
-- Reboot to complete the rebase:
-  ```
-  systemctl reboot
-  ```
-- Then rebase to the signed image, like so:
-  ```
-  rpm-ostree rebase ostree-image-signed:docker://ghcr.io/blue-build/template:latest
-  ```
-- Reboot again to complete the installation
-  ```
-  systemctl reboot
-  ```
-
-The `latest` tag will automatically point to the latest build. That build will still always use the Fedora version specified in `recipe.yml`, so you won't get accidentally updated to the next major version.
-
-## ISO
-
-If build on Fedora Atomic, you can generate an offline ISO with the instructions available [here](https://blue-build.org/how-to/generate-iso/#_top). These ISOs cannot unfortunately be distributed on GitHub for free due to large sizes, so for public projects something else has to be used for hosting.
-
-## Verification
-
-These images are signed with [Sigstore](https://www.sigstore.dev/)'s [cosign](https://github.com/sigstore/cosign). You can verify the signature by downloading the `cosign.pub` file from this repo and running the following command:
-
-```bash
-cosign verify --key cosign.pub ghcr.io/blue-build/template
+```mermaid
+flowchart TD
+    A[📦 Imagen Base\n(kinoite-nvidia)] --> B(🛠️ recipes/recipe.yml)
+    B --> C{⚙️ .github/ (Actions)}
+    C --> D[🌐 ghcr.io/wilsonreategui/nostromos]
+    D --> E[💻 Tu Computadora]
+    
+    style A fill:#0B5A81,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#1F2937,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#238636,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#1F883D,stroke:#333,stroke-width:2px,color:#fff
+    style E fill:#6366F1,stroke:#333,stroke-width:2px,color:#fff
 ```
+
+### ¿Para qué sirve cada carpeta?
+
+- **`recipes/`**: Contiene `recipe.yml`, el "plano arquitectónico" de nostromOS. Aquí defines la imagen base y qué paquetes/flatpaks instalar o eliminar.
+- **`files/`**: Permite inyectar archivos al sistema. Lo que pongas dentro de `files/system/` se copiará directamente a la raíz `/` de tu PC.
+- **`modules/`**: Espacio para scripts avanzados si la configuración estándar de BlueBuild no es suficiente.
+- **`.github/`**: La fábrica en la nube. Contiene el flujo (`build.yml`) que lee tu receta y compila el OS automáticamente cada vez que guardas cambios, subiéndolo a GitHub Container Registry.
+
+---
+
+## 💿 Instalación desde ISO
+
+Para instalar nostromOS desde cero en tu computadora, la mejor manera es generar una imagen ISO que puedas flashear en un USB. 
+
+Una vez que tu código se haya subido a GitHub y la imagen termine de construirse en la pestaña "Actions", puedes generar la ISO fácilmente usando la herramienta de BlueBuild desde otra terminal de Linux:
+
+1. **Instala BlueBuild CLI** (si no lo tienes):
+   Puedes revisar la [documentación oficial](https://blue-build.org/cli/) para obtener el instalador.
+
+2. **Genera la ISO basada en tu imagen de la nube**:
+   Ejecuta este comando para descargar tu imagen recién creada en GitHub y empaquetarla en un archivo ISO listo para usar:
+   ```bash
+   sudo bluebuild generate-iso --iso-name nostromOS.iso image ghcr.io/wilsonreategui/nostromos
+   ```
+
+3. **Flashea el USB**:
+   Usa programas como **Fedora Media Writer**, **Rufus** (en Windows) o **BalenaEtcher** para grabar el archivo `nostromOS.iso` en tu memoria USB.
+
+4. **Instala el sistema**:
+   Inicia tu PC desde el USB y sigue el instalador gráfico estándar de Fedora. ¡Al terminar, tu PC tendrá nostromOS puro!
