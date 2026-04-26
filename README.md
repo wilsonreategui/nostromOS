@@ -18,7 +18,7 @@ flowchart TD
     style C fill:#238636,stroke:#333,stroke-width:2px,color:#fff
     style D fill:#1F883D,stroke:#333,stroke-width:2px,color:#fff
     style E fill:#6366F1,stroke:#333,stroke-width:2px,color:#fff
-```
+``` 
 
 ### ¿Para qué sirve cada carpeta?
 
