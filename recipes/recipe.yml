@@ -16,24 +16,10 @@ modules:
       - source: system
         destination: /
 
-  - type: rpm-ostree
+- type: rpm-ostree
     remove:
       - firefox
       - firefox-langpacks
-      - kcalc
-      - kate
-      - elisa
-      - gwenview
-      - okular
-      - kmines
-      - kmahjongg
-      - kpat
-      - kcharselect
-      - kcolorchooser
-      - filelight
-      - konversation
-      - krdc
-      - krfb
 
   - type: default-flatpaks
     configurations:
