@@ -22,7 +22,7 @@ modules:
       - firefox-langpacks
       - kcalc
       - kate
-      - elisa-player
+      - elisa
       - gwenview
       - okular
       - kmines
@@ -30,7 +30,6 @@ modules:
       - kpat
       - kcharselect
       - kcolorchooser
-      - dragon
       - filelight
       - konversation
       - krdc
