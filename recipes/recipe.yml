@@ -35,4 +35,3 @@ modules:
           - com.google.Chrome
           - com.visualstudio.code
 
-  - type: signing
