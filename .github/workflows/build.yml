@@ -40,3 +40,28 @@ jobs:
 
           # enabled by default, disable if your image is small and you want faster builds
           maximize_build_space: true
+
+  # --- NUEVO TRABAJO PARA GENERAR LA ISO AUTOMÁTICAMENTE ---
+  build-iso:
+    name: Generate ISO
+    runs-on: ubuntu-latest
+    needs: bluebuild # Espera a que la imagen termine de compilarse
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Generar el instalador ISO
+        uses: jasonn3/build-container-installer@main
+        with:
+          arch: x86_64
+          image_name: nostromos
+          image_repo: ghcr.io/${{ github.repository_owner }}
+          image_tag: latest
+          version: 42
+          iso_name: nostromos-installer.iso
+      
+      - name: Subir ISO a GitHub Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: nostromOS-ISO
+          path: ./nostromos-installer.iso
