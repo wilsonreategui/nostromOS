@@ -5,7 +5,17 @@ base-image: ghcr.io/ublue-os/kinoite-nvidia
 image-version: 42
 
 modules:
-  - type: dnf
+  - type: os-release
+    name: NostromOS
+    pretty_name: NostromOS
+    logo: nostromos-logo
+
+  - type: files
+    files:
+      - source: system
+        destination: /
+
+  - type: rpm-ostree
     remove:
       packages:
         - firefox
@@ -27,8 +37,13 @@ modules:
         - krfb
 
   - type: default-flatpaks
+    notify: true
     configurations:
       - scope: system
+        repo:
+          url: https://dl.flathub.org/repo/flathub.flatpakrepo
+          name: flathub
+          title: Flathub
         install:
           - com.valvesoftware.Steam
           - com.discordapp.Discord
