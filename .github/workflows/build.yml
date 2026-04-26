@@ -50,6 +50,13 @@ jobs:
       contents: read
       packages: read
     steps:
+      - name: Autenticarse en GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
       - name: Generar el instalador ISO
         uses: jasonn3/build-container-installer@main
         with:
