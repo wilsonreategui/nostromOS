@@ -17,9 +17,16 @@ modules:
         destination: /
 
   - type: rpm-ostree
+    install:
+      - cloud-utils-growpart
     remove:
       - firefox
       - firefox-langpacks
+
+  - type: script
+    scripts:
+      - branding.sh
+      - fix-disk-size.sh
 
   - type: default-flatpaks
     configurations:
